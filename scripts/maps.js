@@ -1,3 +1,5 @@
+var infowindow;
+
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -23.6815315, lng: -46.8754831},
@@ -23,7 +25,7 @@ function initMap() {
                 lng: position.coords.longitude
             };
 
-            var infowindow = new google.maps.InfoWindow();
+            infowindow = new google.maps.InfoWindow();
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
