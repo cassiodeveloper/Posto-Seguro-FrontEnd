@@ -23,6 +23,8 @@ function initMap() {
                 lng: position.coords.longitude
             };
 
+            var infowindow = new google.maps.InfoWindow();
+
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
 
