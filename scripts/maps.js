@@ -15,29 +15,29 @@ function initMap() {
         }
     });
 
-    var infowindow = new google.maps.InfoWindow();
+    //var infowindow = new google.maps.InfoWindow();
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(function(position) {
        
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
+    //         var pos = {
+    //             lat: position.coords.latitude,
+    //             lng: position.coords.longitude
+    //         };
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+    //         infoWindow.setPosition(pos);
+    //         infoWindow.setContent('Location found.');
 
-            map.setCenter(pos);
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
+    //         map.setCenter(pos);
+    //     }, function() {
+    //         handleLocationError(true, infoWindow, map.getCenter());
+    //     });
+    // } else {
+    //     handleLocationError(false, infoWindow, map.getCenter());
+    // }
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ? 'Erro: Falha ao obter localização.' : 'Erro: Browser não suporta geolocalização.');
-}
+// function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+//     infoWindow.setPosition(pos);
+//     infoWindow.setContent(browserHasGeolocation ? 'Erro: Falha ao obter localização.' : 'Erro: Browser não suporta geolocalização.');
+// }
