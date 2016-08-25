@@ -1,5 +1,3 @@
-var infowindow;
-
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -23.6815315, lng: -46.8754831},
@@ -17,6 +15,8 @@ function initMap() {
         }
     });
 
+    var infowindow = new google.maps.InfoWindow();
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
        
@@ -24,8 +24,6 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
-            infowindow = new google.maps.InfoWindow();
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
