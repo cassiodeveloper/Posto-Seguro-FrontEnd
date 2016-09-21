@@ -1,3 +1,5 @@
 User-Agent: *
 
 Disallow:  
+
+Sitemap: http://postoseguro.azurewebsites.net/sitemap.xml  
