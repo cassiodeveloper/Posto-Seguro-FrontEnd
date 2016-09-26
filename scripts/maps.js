@@ -1,3 +1,6 @@
+var domain = 'http://postoseguro.azurewebsites.net';
+var api = '/api/Posto';
+
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -23.6815315, lng: -46.8754831},
@@ -32,9 +35,24 @@ function initMap() {
     } else {
         //handleLocationError(false, infoWindow, map.getCenter());
     }
+
+    getPostos(map);
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ? 'Erro: Falha ao obter localização.' : 'Erro: Browser não suporta geolocalização.');
+}
+
+function getPostos(map) {
+    $.getJSON(domain + api, function(jsonResponse) {
+        $.each(jsonResponse, function(key, posto) {
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(posto.Lat, posto.Lng),
+                map: map,
+                title: posto.Nome
+            });
+        });
+    });
 }
