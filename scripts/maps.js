@@ -4,6 +4,8 @@ var defaultLat = -23.5655317;
 var defaultLng = -46.6546707;
 var defaultZomm = 10;
 
+var shortDateFormat = 'dd/MM/yyyy';
+
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: defaultLat, lng: defaultLng},
@@ -50,31 +52,36 @@ function getPostos(map) {
 
 function setInfoWindowContent(postoId, map, marker) {
 
-    $.getJSON(domain + api, function(jsonResponse) {
-        $.each(jsonResponse, function(key, posto) {
-            var infoWindow = new google.maps.InfoWindow({
-                content: configureInfoWindowLayout(posto)
-            });
-
-            infoWindow.open(map, marker);
+    $.getJSON(domain + api + '/' + postoId, function(jsonResponse) {
+        var infoWindow = new google.maps.InfoWindow({
+            content: configureInfoWindowLayout(jsonResponse)
         });
+
+        infoWindow.open(map, marker);
     });
 }
 
 function configureInfoWindowLayout(posto) {
-    return  '<div id="content">' +
-                '<div id="siteNotice"></div>' +
-                '<h1 id="firstHeading" class="firstHeading">' + posto.Nome + '</h1>' +
-                '<div id="bodyContent">' +
-                    '<p>Bandeira: <b>' + posto.Bandeira + '</b></p>' +
-                    '<p>Tipo: <b>' + posto.Tipo + '</b></p>' +
-                    '<p>Endereço: ' + posto.Endereco + ', ' + posto.Cidade + ', ' + posto.Bairro + ', ' + posto.Estado +'</p>' +                    
-                    '<p>Penalidades: <ul>' + posto.Penalidades.forEach(function(penalidade) {
-                        '<li>' + penalidade.Data + '</li>'
-                        '<li>' + penalidade.Descricao + '</li>'
-                        '<li>' + penalidade.Tipo + '</li>'
-                    }) +
-                    '</ul></p>' +
+
+    var penalidadesContent = '<ul>';
+
+    for (pen of posto.Penalidades) {
+        penalidadesContent += '<li><b>Data: </b>' + $.format.date(pen.Data, shortDateFormat) + '</li>' +
+                             '<li><b>Descrição: </b>' + pen.Descricao + '</li>' +
+                             '<li><b>Tipo: </b>' + pen.Tipo + '</li>' + 
+                             '<br />'
+    }
+
+    penalidadesContent += '</ul>';
+
+    return  '<div id="infoWindowContent">' +
+                '<h2 id="postoNome" class="postoNome">' + posto.Nome + '</h2>' +
+                '<div id="infoWindowBodyContent">' +
+                    '<p><b>Bandeira: </b>' + posto.Bandeira + '</p>' +
+                    '<p><b>Tipo: </b>' + posto.Tipo + '</p>' +
+                    '<p><b>Data cadastro: </b>' + $.format.date(posto.DataCadastro, shortDateFormat) + '</p>' +
+                    '<p><b>Endereço: </b>' + posto.Endereco + ', ' + posto.Cidade + ', ' + posto.Bairro + ', ' + posto.Estado +'</p>' +                    
+                    '<p><b>Penalidades: </b>' + penalidadesContent + '</p>' +
                 '</div>' +
             '</div>';
 }
