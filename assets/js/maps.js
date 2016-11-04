@@ -202,6 +202,8 @@ function createHomepageGoogleMap(_latitude, _longitude, json){
                 }
             });
 
+            $('.qtdPostos')[0].innerText = visibleItemsArray.length + " postos encontrados";
+
             $('.items-list .results').html( visibleItemsArray );
 
             $.each(json, function(a) {
