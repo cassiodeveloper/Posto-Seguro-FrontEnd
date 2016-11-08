@@ -244,7 +244,7 @@ section header h2 {
   margin-top: 5px;
 }
 section header .page-title {
-  padding: 25px 0;
+  padding: 10px 0;
   margin-bottom: 0;
 }
 
@@ -256,8 +256,8 @@ ul.bullets {
 }
 ul.bullets li {
   display: inline-block;
-  line-height: 24px;
-  width: 48%;
+  line-height: 20px;
+  width: 100%;
 }
 ul.bullets li:before {
   text-shadow: none;
@@ -2664,20 +2664,20 @@ ul.bullets li a:hover {
 }
 .modal-window .modal-wrapper {
   display: inline-block;
-  width: auto;
+  width: 820px;
   position: relative;
   top: 100px;
   z-index: 1;
+  background-color: #ff513f;
 }
 .modal-window .modal-wrapper > h2, .modal-window .modal-wrapper > h3 {
   color: #fff;
-  text-align: left;
+  text-align: center;
 }
 .modal-window .modal-wrapper > h2 {
   font-size: 36px;
   text-transform: none;
   margin-bottom: 0px;
-  margin-top: 0;
 }
 .modal-window .modal-wrapper > figure {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
@@ -3698,8 +3698,8 @@ ul.bullets li a:hover {
 
 .text-banner {
   display: table;
-  padding: 120px 0;
   width: 100%;
+  margin-bottom: 15px;
 }
 .text-banner figure {
   display: table-cell;
@@ -6014,7 +6014,7 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
   position: relative;
 }
 #page-footer .inner {
-  padding-top: 60px;
+
 }
 #page-footer .inner address figure {
   margin-top: 20px;
@@ -6043,7 +6043,6 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
 #page-footer .inner .footer-bottom {
   border-bottom: 2px solid #ff513f;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  margin-top: 20px;
   padding: 30px;
 }
 #page-footer .inner .footer-bottom .left {
@@ -7119,4 +7118,8 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
   }
+}
+
+.simple-link {
+  color: #ff513f;
 }

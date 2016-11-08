@@ -18,10 +18,10 @@ $(document).ready(function($) {
     adaptBackgroundHeight();
 
     $('.quick-view, .results .item').live('click',  function(){
-        var id = $(this).attr('id');
+        
         var entityid = $(this).attr('entityid');
 
-        quickView(id, entityid);
+        quickView(entityid);
         
         return false;
     });
@@ -551,34 +551,19 @@ function drawItemSpecific(category, json, a){
 
 // Quick View ----------------------------------------------------------------------------------------------------------
 
-function quickView(id, entityid){
-
-    var posto = {};
-
-    $.ajax({
-        type: 'GET',
-        url: '/postoseguro/api/Posto/' + entityid,
-        success: function (data) {
-            openModal(data);
-        }
-    });
-}
-
-function openModal(data) { 
+function quickView(entityid){
 
     $.ajax({
         type: 'GET',
         url: 'assets/external/_modal.html',
         success: function (modalData) {
 
-            var modal = replaceTemplateValues(modalData, data);
+            createCookie('selectedPostoId', entityid);
 
-            $('body').append(modal);
+            $('body').append(modalData);
         }
-    });    
+    }); 
 }
-
-// Adapt background height to block element ----------------------------------------------------------------------------
 
 function adaptBackgroundHeight(){
     $('.background').each(function(){
@@ -589,13 +574,6 @@ function adaptBackgroundHeight(){
     });
 }
 
-function replaceTemplateValues(modalData, data) {
-
-    var modal = "";
-
-    modal = modalData;
-
-    modal.toString().replace("{NOME}", data.Nome);
-
-    return modal;
+function createCookie(name, value) {
+	document.cookie = name + "=" + value + "" + "; path=/";
 }

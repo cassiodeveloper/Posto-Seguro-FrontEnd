@@ -17,14 +17,7 @@ function drawInfobox(category, infoboxContent, json, i){
     '<div class="infobox">' +
         '<div class="inner">' +
             '<div class="image">' +
-                '<div class="overlay">' +
-                    '<div class="wrapper">' +
-                        '<a href="#" class="quick-view" data-toggle="modal" data-target="#modal" entityid="' + json[i].Id + '" id="' + json[i] + '">Espiar penalidades</a>' +
-                        '<hr>' +
-                        '<a href="#" class="detail">Ver detalhes</a>' +
-                    '</div>' +
-                '</div>' +
-                '<a href="#" class="description">' +
+                '<a href="#" class="description quick-view" data-toggle="modal" data-target="#modal" entityid="' + json[i].Id + '">' +
                     '<div class="meta">' +
                         qtdPenalidades +
                         '<h2>' + Nome +  '</h2>' +
@@ -32,7 +25,6 @@ function drawInfobox(category, infoboxContent, json, i){
                         '<i class="fa fa-angle-right"></i>' +
                     '</div>' +
                 '</a>' +
-                '<img src="' + gallery +  '">' +
             '</div>' +
         '</div>' +
     '</div>';

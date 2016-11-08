@@ -1,64 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-
 <div class="modal-window fade_in">
-    <div class="modal-wrapper"><h2>{NOME}</h2>
-        <figure>{BANDEIRA}</figure>
-        <div class="rating" data-rating="4"></div>
-        <div class="modal-body">
+    <div class="modal-wrapper">
+        <h2 id="lblNomePosto"></h2>
+        <h3 id="lblBandeira"></h3>
+        <h3 id="lblTipo"></h3>        
+        <div class="modal-body">            
             <div class="gallery">
-                <div class="image">
-                    <div class="price">$2500</div>
-                    <div class="type"><i><img src="assets/icons/restaurants-bars/restaurants/restaurant.png" alt=""></i><span>Apartment</span></div>
-                    <div class="owl-carousel gallery">
-                        <img src="assets/img/items/1.jpg">
-                        <img src="assets/img/items/5.jpg">
-                        <img src="assets/img/items/4.jpg">
-                    </div>
-                </div>
-                <div class="features"><h3>Features</h3>
+                <div class="features">
+                    <h3>Localização</h3>
                     <ul class="bullets">
-                        <li>Free Parking</li>
-                        <li>Cards Accepted</li>
-                        <li>Wi-Fi</li>
-                        <li>Air Condition</li>
-                        <li>Reservations</li>
-                        <li>Teambuildings</li>
-                        <li>Places to seat</li>
+                        <li id="lblEndereco"></li>
+                        <li id="lblBairro"></li>
+                        <li id="lblCidade"></li>
+                        <li id="lblEstado"></li>
                     </ul>
                 </div>
             </div>
             <div class="modal-content">
-                <section><h3>Description</h3>
-                    <p>
-                        Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque
-                        massa, viverra interdum eros ut, imperdiet pellentesque mauris. Proin sit amet scelerisque
-                        risus. Donec semper semper erat ut mollis. Curabitur suscipit, justo eu dignissim lacinia, ante
-                        sapien pharetra duin consectetur eros augue sed ex. Donec a odio rutrum, hendrerit sapien vitae,
-                        euismod arcu.
-                    </p>
+                <section>
+                    <h3>Penalidades</h3>
+                    <ul class="bullets" id="listaPenalidades"></ul>
                 </section>
-                <section><h3>Overview</h3>
-                    <dl>
-                        <dt>Bedrooms</dt>
-                        <dd>2</dd>
-                        <dt>Bedrooms</dt>
-                        <dd>2</dd>
-                        <dt>Area</dt>
-                        <dd>240</dd>
-                        <dt>Garages</dt>
-                        <dd>1</dd>
-                    </dl>
+                <section id="sectionResumo">
+                    <h3>Observações</h3>
                 </section>
-                <section><h3>Last Review</h3>
-                    <div class="rating" data-rating="5"></div>
-                    <p>Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque massa, viverra interdum eros ut, imperdiet</p>
-                </section>
-                <a href="item-detail.html" class="btn btn-default btn-large">Show Detail</a></div>
+            </div>
         </div>
         <div class="modal-close"><img src="assets/img/close.png"></div>
     </div>
@@ -66,16 +31,13 @@
 </div>
 
 <script>
-    // Render Owl carousel gallery
 
-    var _rtl = false;
-    drawOwlCarousel(_rtl);
+    $(document).ready(function(){
+        
+        getPostoById(readCookie('selectedPostoId'));
 
-    // Render Rating stars
-
-    rating('.modal-window');
-
-    // Remove modal element form DOM
+        eraseCookie('selectedPostoId');
+    });
 
     $('.modal-window .modal-background, .modal-close').live('click',  function(e){
         $('.modal-window').addClass('fade_out');
@@ -83,10 +45,83 @@
             $('.modal-window').remove();
         }, 300);
     });
+
+    function getPostoById(id){
+
+        $.ajax({
+            type: 'GET',
+            url: '/postoseguro/api/Posto/' + id,
+            success: function (data) {
+                replaceData(data);
+            }
+        });
+    }
+
+    function getResumoQualidadePorEstado(estado) {
+        $.ajax({
+            type: 'GET',
+            url: '/postoseguro/api/ResumoQualidade/' + estado,
+            success: function (data) {
+                replaceDataResumoQualidade(data);
+            }
+        });
+    }
+
+    function replaceData(postoEntity) {
+        document.getElementById('lblNomePosto').innerHTML = postoEntity.Nome;
+        document.getElementById('lblBandeira').innerHTML = postoEntity.Bandeira;
+        document.getElementById('lblTipo').innerHTML = postoEntity.Tipo;
+        document.getElementById('lblEndereco').innerHTML = 'Endereço: ' + postoEntity.Endereco;
+        document.getElementById('lblBairro').innerHTML = 'Bairro: ' + postoEntity.Bairro;
+        document.getElementById('lblCidade').innerHTML = 'Cidade: ' + postoEntity.Cidade;
+        document.getElementById('lblEstado').innerHTML = 'Estado: ' + postoEntity.Estado;
+
+        $.each(postoEntity.Penalidades, function(i, penalidade) {
+            document.getElementById('listaPenalidades').innerHTML += '<li>Data: ' + $.format.date(penalidade.Data, "dd/MM/yyyy") + ' Tipo: ' + penalidade.Tipo + ' <br />Descrição: ' + penalidade.Descricao + '</li>';
+        })
+
+        if(postoEntity.Qualidade)
+            getResumoQualidadePorEstado(postoEntity.Estado);
+    }
+
+    function replaceDataResumoQualidade(resumoEntity) {
+
+        $.each(resumoEntity.Observacoes, function(i, obs) {
+            document.getElementById('sectionResumo').innerHTML += '<br />' + obs.Descricao;
+        })
+    }
+
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+
+    function createCookie(name,value,days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        }
+        else var expires = "";
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            
+            while (c.charAt(0)==' ') 
+                c = c.substring(1,c.length);
+            
+            if (c.indexOf(nameEQ) == 0) 
+                return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
 </script>
 
 <!--[if lte IE 9]>
 <script type="text/javascript" src="assets/js/ie-scripts.js"></script>
 <![endif]-->
-</body>
-</html>
