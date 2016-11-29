@@ -85,9 +85,7 @@
                                                     <span class="input-group-addon"><i class="fa fa-map-marker geolocation" data-toggle="tooltip" data-placement="bottom" title="Me localize!"></i></span>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                            </div>
+                                            <div class="form-group"></div>
                                         </div>
                                     </form>
                                 </div>
@@ -95,7 +93,7 @@
                             <div class="items-list">
                                 <div class="inner">
                                     <header>
-                                        <h3 class="qtdPostos">postos encontrados</h3>
+                                        <h3 class="qtdPostos"></h3>
                                     </header>
                                     <ul class="results list"></ul>
                                 </div>
@@ -130,7 +128,6 @@
         <script>
                 var _latitude = -23.6131609;
                 var _longitude = -46.5798336;
-                // var jsonPath = 'assets/json/items.json.txt';
                 var jsonPath = '/api/Posto';
 
                 $.getJSON(jsonPath)
@@ -165,5 +162,4 @@
             <script type="text/javascript" src="assets/js/ie-scripts.js"></script>
             <![endif]-->
     </body>
-
 </html>

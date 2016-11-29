@@ -5299,7 +5299,7 @@ form .form-group.large input {
   width: initial;
 }
 .search-bar.horizontal .main-search.inputs-1 .input-row > .form-group {
-  width: 95%;
+  width: 100%;
 }
 .search-bar.horizontal .main-search.inputs-2 .input-row > .form-group {
   width: 47%;
@@ -7121,5 +7121,9 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
 }
 
 .simple-link {
+  color: #ff513f;
+}
+
+.red {
   color: #ff513f;
 }
