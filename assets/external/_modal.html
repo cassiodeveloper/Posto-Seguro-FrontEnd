@@ -50,7 +50,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/api/Posto/' + id,
+            url: '/PostoSeguro/api/Posto/' + id,
             success: function (data) {
                 replaceData(data);
             }
@@ -60,7 +60,7 @@
     function getResumoQualidadePorEstado(estado) {
         $.ajax({
             type: 'GET',
-            url: '/api/ResumoQualidade/' + estado,
+            url: '/PostoSeguro/api/ResumoQualidade/' + estado,
             success: function (data) {
                 replaceDataResumoQualidade(data);
             }
